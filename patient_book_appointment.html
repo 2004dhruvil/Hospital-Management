@@ -1,0 +1,93 @@
+{% extends 'navigationbar.html' %}
+{% load static %}
+{% block body %}
+
+<style>
+.container.page-container {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 35px;
+    width: 100%;
+    max-width: 420px;
+    color: white;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    margin-bottom: 40px;
+    transition: all 0.3s ease;
+}
+
+.container.page-container:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
+</style>
+
+<body class="appointment-bg">
+
+<div class="container page-container" style="max-width:480px;">
+    <h2 class="text-center">Book Appointment</h2>
+    <br>
+
+    {% if error == "yes" %}
+        <div class="alert alert-danger">Could not create appointment. Try again.</div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- Doctor Dropdown -->
+        <label>Doctor</label>
+        <select name="doctor" id="doctorSelect" class="form-control" required>
+            <option value="">Select doctor</option>
+            {% for d in doctors %}
+                <option value="{{ d.name }}">{{ d.name }} ({{ d.specialization }})</option>
+            {% endfor %}
+        </select>
+
+        <br>
+
+        <!-- Slots Dropdown -->
+        <label>Available Slots</label>
+        <select name="slot" id="slotSelect" class="form-control" required>
+            <option value="">Select slot</option>
+        </select>
+
+        <br>
+
+        <!-- Submit Button -->
+        <input type="submit" value="Book Appointment" class="form-control btn btn-primary">
+
+    </form>
+</div>
+
+<script>
+document.getElementById("doctorSelect").addEventListener("change", function() {
+    let doctor = this.value;
+    let slotSelect = document.getElementById("slotSelect");
+
+    // Clear previous slots
+    slotSelect.innerHTML = '<option value="">Select slot</option>';
+
+    if (doctor === "") return;
+
+    fetch(`/get-slots/?doctor=${doctor}`)
+        .then(res => res.json())
+        .then(data => {
+            data.slots.forEach(s => {
+                let option = document.createElement("option");
+                option.value = s.id;
+                option.textContent = s.datetime;
+                slotSelect.appendChild(option);
+            });
+
+            if (data.slots.length === 0) {
+                let option = document.createElement("option");
+                option.textContent = "No slots available";
+                option.disabled = true;
+                slotSelect.appendChild(option);
+            }
+        });
+});
+</script>
+
+{% endblock %}

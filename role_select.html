@@ -1,0 +1,43 @@
+{% extends 'navigationbar.html' %}
+{% load static %}
+{% block body %}
+<body class="dashboard-bg">
+
+<div class='container page-container'>
+    <h2 class='text-center'>Welcome</h2>
+    <p class='text-center'>Please choose your role to continue.</p>
+    <div class="row mt-4">
+        <div class="col-md-4 offset-md-2 text-center card stat-card card-theme-doctor" style="background:linear-gradient(135deg,#34d399,#059669);">
+            <div class="role-icon mb-3">
+                <i class="fas fa-stethoscope fa-3x text-primary"></i>
+            </div>
+            <h4>Doctor</h4>
+            <p class="text-muted">Medical professionals</p>
+            <a class="btn" href="{% url 'doctor_login' %}">Doctor Login</a>
+        </div>
+        <div class="col-md-4 text-center card stat-card card-theme-patient" style="background:linear-gradient(135deg,#fb7185,#ef4444);">
+            <div class="role-icon mb-3">
+                <i class="fas fa-user-injured fa-3x text-success"></i>
+            </div>
+            <h4>Patient</h4>
+            <p class="text-muted">Patients and visitors</p>
+            <div class="mt-2">
+                <a class="btn" href="{% url 'patient_login' %}">Patient Login</a>
+                <a class="btn" href="{% url 'patient_register' %}">Patient Register</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 text-center card stat-card card-theme-admin" style="background:linear-gradient(135deg,#fdba74,#f97316);">
+            <div class="role-icon mb-3">
+                <i class="fas fa-user-shield fa-3x text-danger"></i>
+            </div>
+            <h4>Admin</h4>
+            <p class="text-muted">System administrators</p>
+            <a class="btn btn-danger mt-2" href="{% url 'login' %}">Admin Login</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+

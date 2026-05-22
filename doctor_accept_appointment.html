@@ -1,0 +1,73 @@
+{% extends 'navigationbar.html' %}
+{% block body %}
+<div class="container page-container" style="max-width:600px;">
+    <h2 class="text-center">Accept Appointment</h2>
+    <br>
+    
+    <div class="card">
+        <div class="card-header">
+            <h5>Appointment Details</h5>
+        </div>
+        <div class="card-body">
+            <ul class="list-unstyled">
+                <li><strong>Patient:</strong> {{ appointment.patient.name }}</li>
+                <li><strong>Date:</strong> {{ appointment.date1 }}</li>
+                <li><strong>Time:</strong> {{ appointment.time1 }}</li>
+                <li><strong>Patient Contact:</strong> {{ appointment.patient.mobile }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="doctor_notes"><strong>Notes for Patient (Optional)</strong></label>
+            <textarea class="form-control" id="doctor_notes" name="doctor_notes" rows="3" 
+                      placeholder="Any specific notes or instructions for the patient..."></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="preparation_instructions"><strong>Preparation Instructions (Optional)</strong></label>
+            <textarea class="form-control" id="preparation_instructions" name="preparation_instructions" rows="3" 
+                      placeholder="Any preparation instructions (fasting, medications, etc.)..."></textarea>
+        </div>
+        
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-success btn-lg">
+                <i class="fas fa-check"></i> Accept Appointment
+            </button>
+            <a href="{% url 'doctor_appointments' %}" class="btn btn-secondary btn-lg ml-2">
+                <i class="fas fa-times"></i> Cancel
+            </a>
+        </div>
+    </form>
+    
+    <div class="alert alert-info mt-3">
+        <i class="fas fa-info-circle"></i>
+        <strong>Note:</strong> The patient will be notified via email about the appointment confirmation.
+    </div>
+</div>
+{% endblock %}
+
+
+{% comment %} {% extends 'navigationbar.html' %}
+{% block body %}
+<div class="container page-container" style="max-width:500px;">
+    <h2 class="text-center">Accept Appointment</h2>
+    <br>
+    <p>Are you sure you want to <b>accept</b> this appointment?</p>
+
+    <ul>
+        <li><b>Patient:</b> {{ appointment.patient.name }}</li>
+        <li><b>Date:</b> {{ appointment.date1 }}</li>
+        <li><b>Time:</b> {{ appointment.time1 }}</li>
+    </ul>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Yes, Accept</button>
+        <a href="{% url 'doctor_appointments' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %} {% endcomment %}

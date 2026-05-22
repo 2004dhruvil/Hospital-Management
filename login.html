@@ -1,0 +1,74 @@
+{% extends 'navigationbar.html' %}
+{% load static %}
+{% block body %}
+
+<body class="login-bg">
+
+    {% if error == "no" %}
+    <div class="alert alert-success text-center mt-3">✅ Logged in Successfully!</div>
+    {% elif error == "yes" %}
+    <div class="alert alert-danger text-center mt-3">❌ Invalid Login Credentials, Try Again.</div>
+    {% endif %}
+
+    <div class="container page-container"
+        style="max-width: 450px; margin-top: 50px; background: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+        <h2 class="text-center mb-4" style="color:#007bff;">Admin Login</h2>
+
+        <form method="post" autocomplete="off">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="uname" class="form-label">Admin Username</label>
+                <input type="text" class="form-control" id="uname" name="uname"
+                    placeholder="Enter admin username" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="pwd" class="form-label">Password</label>
+                <input type="password" class="form-control" id="pwd" name="pwd"
+                    placeholder="Enter password" required>
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </div>
+        </form>
+    </div>
+
+    {% if session_data or cookies %}
+    <div class="container mt-5" style="max-width: 600px;">
+        <h4 class="text-center text-secondary mb-4">🧩 Debug Information</h4>
+
+        {% if session_data %}
+        <div class="card mb-3">
+            <div class="card-header bg-info text-white fw-bold">Session Data</div>
+            <div class="card-body p-0">
+                <ul class="list-group list-group-flush">
+                    {% for key, value in session_data.items %}
+                    <li class="list-group-item"><strong>{{ key }}</strong>: {{ value }}</li>
+                    {% empty %}
+                    <li class="list-group-item text-muted">No session data available.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if cookies %}
+        <div class="card">
+            <div class="card-header bg-warning text-dark fw-bold">Cookies</div>
+            <div class="card-body p-0">
+                <ul class="list-group list-group-flush">
+                    {% for key, value in cookies.items %}
+                    <li class="list-group-item"><strong>{{ key }}</strong>: {{ value }}</li>
+                    {% empty %}
+                    <li class="list-group-item text-muted">No cookies available.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+</body>
+{% endblock %}

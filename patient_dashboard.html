@@ -1,0 +1,111 @@
+{% extends 'navigationbar.html' %}
+{% load static %}
+{% block body %}
+<body class="patient-bg">
+
+<div class='container page-container'>
+    <h2 class='text-center'>Patient Dashboard</h2>
+    <br>
+    <div class="row">
+        <div class="col-md-4 card stat-card text-center">
+            <div class="stat-value">{{ upcoming }}</div>
+            <div class="stat-label">Upcoming Appointments</div>
+        </div>
+        <div class="col-md-4 card stat-card text-center">
+            <div class="stat-value">{{ doctors_count }}</div>
+            <div class="stat-label">Doctors</div>
+        </div>
+        <div class="col-md-4 card stat-card text-center">
+            <a class="btn" href="{% url 'patient_appointments' %}">View All Appointments</a>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <h4>Your next appointments</h4>
+        {% if appointments %}
+        <table class="table table-hover" id="example">
+            <thead>
+                <tr>
+                    <th>Doctor</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in appointments %}
+                <tr>
+                    <td>{{ a.doctor.name }}</td>
+                    <td>{{ a.date1 }}</td>
+                    <td>{{ a.time1 }}</td>
+                    <td>
+                        {% if a.status == "Pending" %}
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        {% elif a.status == "Scheduled" %}
+                            <span class="badge bg-success">Confirmed</span>
+                        {% elif a.status == "Rejected" %}
+                            <span class="badge bg-danger">Rejected</span>
+                        {% elif a.status == "Completed" %}
+                            <span class="badge bg-info">Completed</span>
+                        {% else %}
+                            <span class="badge bg-secondary">{{ a.status }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if a.status == "Scheduled" and a.doctor_notes %}
+                            <button class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#notesModal{{ a.id }}">
+                                <i class="fas fa-sticky-note"></i> View Notes
+                            </button>
+                        {% else %}
+                            <span class="text-muted">-</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <!-- Notes Modals -->
+        {% for a in appointments %}
+            {% if a.status == "Scheduled" and a.doctor_notes %}
+            <div class="modal fade" id="notesModal{{ a.id }}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Appointment Notes - Dr. {{ a.doctor.name }}</h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span>&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            {% if a.doctor_notes %}
+                            <h6>Doctor's Notes:</h6>
+                            <p>{{ a.doctor_notes }}</p>
+                            {% endif %}
+                            
+                            {% if a.preparation_instructions %}
+                            <h6>Preparation Instructions:</h6>
+                            <p>{{ a.preparation_instructions }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+        {% else %}
+        <div class="text-center p-4">
+            <p class="text-muted">No upcoming appointments.</p>
+            <a href="{% url 'patient_book_appointment' %}" class="btn">Book an Appointment</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+
+

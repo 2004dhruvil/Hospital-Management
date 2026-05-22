@@ -1,0 +1,30 @@
+{% extends 'navigationbar.html' %}
+{% load static %}
+{% block body %}
+<body class="doctor-bg">
+
+<div class="container page-container" style="max-width:520px;">
+    <h2 class="text-center">My Profile</h2>
+    <br>
+    {% if success %}
+    <div class="alert alert-success">Profile updated.</div>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <label>Name</label>
+        <input name="name" class="form-control" value="{{ doctor.name }}" required>
+
+        <label>Mobile</label>
+        <input name="mobile" class="form-control" value="{{ doctor.mobile }}">
+
+        <label>Specialization</label>
+        <input name="specialization" class="form-control" value="{{ doctor.specialization }}" required>
+
+        <br>
+        <input type="submit" value="Save" class="form-control btn btn-primary">
+    </form>
+</div>
+
+{% endblock %}
+
+

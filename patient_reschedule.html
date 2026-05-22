@@ -1,0 +1,27 @@
+{% extends 'navigationbar.html' %}
+{% load static %}
+{% block body %}
+<body class="appointment-bg">
+
+<div class="container page-container" style="max-width:480px;">
+    <h2 class="text-center">Reschedule Appointment</h2>
+    <br>
+    {% if error == "yes" %}
+    <div class="alert alert-danger">Could not reschedule. Try again.</div>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <label>Date</label>
+        <input type="date" name="date" class="form-control" value="{{ appointment.date1|date:'Y-m-d' }}" required>
+
+        <label>Time</label>
+        <input type="time" name="time" class="form-control" value="{{ appointment.time1|time:'H:i' }}" required>
+
+        <br>
+        <input type="submit" value="Save" class="form-control btn btn-primary">
+    </form>
+</div>
+
+{% endblock %}
+
+

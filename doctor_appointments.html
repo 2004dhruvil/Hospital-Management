@@ -1,0 +1,55 @@
+{% extends 'navigationbar.html' %}
+{% load static %}
+{% block body %}
+<body class="doctor-bg">
+
+<div class='container page-container'>
+    <h2 class='text-center'>All Appointments</h2>
+    <br>
+    <table class="table table-hover" id="example">
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for a in appointments %}
+            <tr>
+                <td>{{ a.patient.name }}</td>
+                <td>{{ a.date1 }}</td>
+                <td>{{ a.time1 }}</td>
+                <td>
+                    {% if a.status == "Pending" %}
+                        <span class="badge bg-warning text-dark">Pending</span>
+                    {% elif a.status == "Scheduled" %}
+                        <span class="badge bg-info text-dark">Scheduled</span>
+                    {% elif a.status == "Rejected" %}
+                        <span class="badge bg-danger">Rejected</span>
+                    {% elif a.status == "Completed" %}
+                        <span class="badge bg-success">Completed</span>
+                    {% else %}
+                        <span class="badge bg-secondary">{{ a.status }}</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if a.status == "Pending" %}
+                        <a class="btn btn-sm btn-success" href="{% url 'doctor_accept_appointment' a.id %}">Accept</a>
+                        <a class="btn btn-sm btn-danger" href="{% url 'doctor_reject_appointment' a.id %}">Reject</a>
+                    {% elif a.status == "Scheduled" %}
+                        <a class="btn btn-sm btn-primary" href="{% url 'doctor_complete_appointment' a.id %}">Mark Completed</a>
+                    {% else %}
+                        <em>No action</em>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">No appointments found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

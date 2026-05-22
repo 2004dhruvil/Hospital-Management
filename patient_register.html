@@ -1,0 +1,68 @@
+{% extends 'navigationbar.html' %}
+{% load static %}
+{% block body %}
+
+<style>
+        .container.page-container {
+            background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(12px);
+        border-radius: 20px;
+        padding: 35px;
+        width: 100%;
+        max-width: 420px;
+        color: white;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+        margin-bottom: 40px;
+        transition: all 0.3s ease;
+    }
+
+    .container.page-container:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+    }
+
+</style>
+
+<body class="add-patient-bg">
+
+<div class="container page-container" style="max-width:520px;">
+    <h2 class="text-center">Patient Registration</h2>
+    <br>
+    {% if error == "exists" %}
+    <div class="alert alert-warning">Username already exists. Please choose another.</div>
+    {% elif error == "yes" %}
+    <div class="alert alert-danger">Could not create account. Try again.</div>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <label for="name">Full Name</label>
+        <input id="name" name="name" type="text" class="form-control" required>
+
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" class="form-control" required>
+
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" class="form-control" required>
+
+        <label for="gender">Gender</label>
+        <select id="gender" name="gender" class="form-control" required>
+            <option value="">Select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <label for="mobile">Mobile</label>
+        <input id="mobile" name="mobile" type="tel" class="form-control">
+
+        <label for="address">Address</label>
+        <input id="address" name="address" type="text" class="form-control" required>
+
+        <br>
+        <input type="submit" value="Register" class="form-control btn btn-primary">
+    </form>
+</div>
+
+{% endblock %}
+
+

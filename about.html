@@ -1,0 +1,26 @@
+{% extends 'navigationbar.html'  %}
+ {% load static%}
+ {%block body %}
+<body class="about-bg">
+<div class='container page-container'>
+<h2 class='text-center' >About us</h2>
+
+<br>
+
+<div class="row">
+    <div class="col-sm-4 text-center card">
+        <img src="{% static 'css/images/about.jpg' %}" width="300" height="200" class="img-responsive" alt="About">
+    </div>
+
+    <div class="col-sm-8 card">
+        <p class="font-weight-bold">Hello Friends ...</p>
+        <p>
+        This is a simple Hospital Management Project developed by Hospital groups of sal Hospital using HTML, CSS, JavaScript, Bootstrap, Python Django and SQLite.
+        </p>
+
+    </div>
+
+</div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'navigationbar.html' %}
+{% load static %}
+{% block body %}
+<body class="patient-bg">
+
+<div class='container page-container'>
+    <h2 class='text-center'>Your Appointments</h2>
+    <br>
+    <table class="table table-hover" id="example">
+        <thead>
+            <tr>
+                <th>Doctor</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for a in appointments %}
+            <tr>
+                <td>{{ a.doctor.name }}</td>
+                <td>{{ a.date1 }}</td>
+                <td>{{ a.time1 }}</td>
+                <td>{{ a.status }}</td>
+                <td>
+                    {% if a.status != 'Cancelled' and a.status != 'Completed' %}
+                    <a class="btn btn-sm btn-warning" href="{% url 'patient_reschedule_appointment' a.id %}">Reschedule</a>
+                    <a class="btn btn-sm btn-danger" href="{% url 'patient_cancel_appointment' a.id %}">Cancel</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">No appointments found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
+
+

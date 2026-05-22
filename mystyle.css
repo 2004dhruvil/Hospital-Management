@@ -1,0 +1,939 @@
+/* .nav-link{
+    color:white !important;
+} 
+
+.nav-link:hover{
+    color: yellow !important;
+    background-color:red;
+    border-radius: 10px;
+}
+
+.navbar-brand:hover{
+    color: yellow !important;
+    font-weight: bold;
+}
+
+.mydivstyle:hover{
+    box-shadow: 0 0 20px 0 black;
+    transform:translateY(-20px) ;
+}
+
+
+.rounded{
+border-top:8px solid lightblue;
+border-radius: 5px ;
+} */
+
+
+/* Import modern font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* THEME VARIABLES */
+:root {
+  /* New non-blue global palette (violet/teal accents) */
+  --primary: #7c3aed; /* violet */
+  --primary-dark: #5b21b6;
+  --primary-light: #c4b5fd;
+  --accent: #14b8a6; /* teal accent */
+  --text: #1f2937; /* slate */
+  --surface: #ffffff;
+  --background: #f6f7fb; /* soft off-white */
+}
+
+/* Per-page theme palettes (apply if class is on html or body) */
+/* Login */
+html.login-bg, body.login-bg { --primary:#8b5cf6; --primary-dark:#6d28d9; --primary-light:#c4b5fd; --accent:#f472b6; }
+/* Admin/role selection/dashboard - purple */
+html.dashboard-bg, body.dashboard-bg { --primary:#7c3aed; --primary-dark:#5b21b6; --primary-light:#c4b5fd; --accent:#a78bfa; }
+/* About */
+html.about-bg, body.about-bg { --primary:#f59e0b; --primary-dark:#b45309; --primary-light:#fde68a; --accent:#ef4444; }
+/* Contact */
+html.contact-bg, body.contact-bg { --primary:#8b5cf6; --primary-dark:#5b21b6; --primary-light:#c4b5fd; --accent:#22d3ee; }
+/* Doctor-centric pages */
+html.doctor-bg, body.doctor-bg { --primary:#10b981; --primary-dark:#047857; --primary-light:#6ee7b7; --accent:#0ea5e9; }
+/* Patient-centric pages */
+html.patient-bg, body.patient-bg, html.add-patient-bg, body.add-patient-bg { --primary:#ef4444; --primary-dark:#b91c1c; --primary-light:#fecaca; --accent:#f59e0b; }
+/* Appointment pages */
+html.appointment-bg, body.appointment-bg, html.add-appointment-bg, body.add-appointment-bg { --primary:#22c55e; --primary-dark:#15803d; --primary-light:#bbf7d0; --accent:#06b6d4; }
+/* Add doctor */
+html.add-doctor-bg, body.add-doctor-bg { --primary:#3b82f6; --primary-dark:#1d4ed8; --primary-light:#bfdbfe; --accent:#f97316; }
+
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* Strong page backgrounds so login pages aren't white */
+html.patient-bg, body.patient-bg {
+  background-image: linear-gradient(135deg, #ebeb087f 0%, #9d19d189 80%) !important;
+
+}
+html.doctor-bg, body.doctor-bg {
+  background: #0b1220 !important; /* force dark */
+  background-image: linear-gradient(135deg, rgba(72, 217, 47, 0.95) 0%, rgba(43, 213, 219, 0.98) 80%) !important;
+  color: #e2e8f0;
+}
+html.dashboard-bg, body.dashboard-bg {
+  background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 40%, #ddd6fe 100%) !important;
+}
+html.appointment-bg, body.appointment-bg {
+  background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 40%, #99f6e4 100%) !important;
+}
+html.about-bg, body.about-bg {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 40%, #fde68a 100%) !important;
+}
+html.contact-bg, body.contact-bg {
+  background: linear-gradient(135deg, #faf5ff 0%, #e9d5ff 40%, #d8b4fe 100%) !important;
+}
+
+/* Navbar */
+.navbar.navbar-dark {
+  width: 100%;
+  background-color: var(--primary) !important;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Doctor Login form on dark bg */
+body.doctor-bg .container.page-container {
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 16px;
+  padding: 24px 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+body.doctor-bg h2 { color: #e2e8f0; }
+body.doctor-bg label { color: #cbd5e1; }
+body.doctor-bg input.form-control { background:#0b1220 !important; color:#e2e8f0 !important; border-color:#334155 !important; }
+body.doctor-bg input.form-control::placeholder { color:#94a3b8; }
+body.doctor-bg input.form-control:focus { border-color:#10b981; box-shadow: 0 0 0 3px rgba(16,185,129,0.25); }
+body.doctor-bg .btn.btn-primary { background-color:#10b981 !important; border-color:#10b981 !important; }
+body.doctor-bg .btn.btn-primary:hover { background-color:#047857 !important; border-color:#047857 !important; }
+
+/* kill any background pattern overlay on doctor pages */
+body.doctor-bg::before { display:none !important; }
+
+.navbar a {
+  color: #ffffff;
+  text-decoration: none;
+  margin: 0 1rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #facc15; /* Accent yellow */
+}
+
+/* Navbar dropdown toggle as button */
+.navbar .nav-link.dropdown-toggle,
+.navbar .login-toggle {
+  background-color: #b91c1c !important; /* red to match navbar */
+  color: #ffffff !important;
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+}
+
+.navbar .nav-link.dropdown-toggle:hover,
+.navbar .nav-link.dropdown-toggle:focus,
+.navbar .login-toggle:hover,
+.navbar .login-toggle:focus {
+  background-color: #991b1b !important;
+  color: #ffffff !important;
+}
+
+/* Dropdown menu styling */
+.navbar .dropdown-menu {
+  background-color: rgba(0,0,0,0.6);
+  border: none;
+  border-radius: 10px;
+  padding: 0.4rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+.navbar .dropdown-item {
+  color: #e2e8f0; /* light text */
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+}
+
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus,
+.navbar .dropdown-item.active {
+  background-color: var(--primary-dark);
+  color: #ffffff;
+}
+
+.navbar .dropdown-divider {
+  border-top-color: rgba(255,255,255,0.15);
+}
+
+/* Buttons */
+button,
+.btn {
+  background-color: var(--primary);
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+button:hover,
+.btn:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* Cards */
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* Headings */
+h1, h2, h3, h4 {
+  color: var(--text);
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+/* Footer */
+.footer {
+  background-color: #1e293b;
+  color: #f1f5f9;
+  text-align: center;
+  padding: 1.5rem 0;
+  margin-top: 2rem;
+}
+
+.footer a {
+  color: #facc15;
+  margin: 0 0.5rem;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.footer a:hover {
+  opacity: 0.7;
+}
+
+/* Page-specific backgrounds */
+body {
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.08; /* subtle pattern so solid gradients stay visible */
+}
+
+/* Login page - medical cross pattern */
+.login-bg::before {
+  background: 
+    radial-gradient(circle at 20% 20%, #3b82f6 2px, transparent 2px),
+    radial-gradient(circle at 80% 80%, #1d4ed8 2px, transparent 2px),
+    linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%);
+  background-size: 50px 50px, 50px 50px, 100% 100%;
+}
+
+/* Dashboard - geometric pattern */
+.dashboard-bg::before {
+  background: 
+    linear-gradient(45deg, #f0f9ff 25%, transparent 25%),
+    linear-gradient(-45deg, #e0f2fe 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #bae6fd 75%),
+    linear-gradient(-45deg, transparent 75%, #7dd3fc 75%);
+  background-size: 30px 30px;
+  background-position: 0 0, 0 15px, 15px -15px, -15px 0px;
+}
+
+/* About page - wave pattern */
+.about-bg::before {
+  background: 
+    linear-gradient(45deg, #fef3c7 0%, #fde68a 25%, #f59e0b 50%, #d97706 75%, #92400e 100%),
+    radial-gradient(circle at 30% 70%, #fbbf24 20%, transparent 20%),
+    radial-gradient(circle at 70% 30%, #f59e0b 20%, transparent 20%);
+  background-size: 100% 100%, 200px 200px, 200px 200px;
+}
+
+/* Contact page - dots and lines */
+.contact-bg::before {
+  background: 
+    radial-gradient(circle at 1px 1px, #8b5cf6 1px, transparent 0),
+    linear-gradient(90deg, #a78bfa 1px, transparent 1px),
+    linear-gradient(0deg, #c4b5fd 1px, transparent 1px);
+  background-size: 20px 20px, 40px 40px, 40px 40px;
+  background-color: #faf5ff;
+}
+
+/* Doctor list - medical grid */
+.doctor-bg::before {
+  background: 
+    linear-gradient(90deg, #ecfdf5 1px, transparent 1px),
+    linear-gradient(0deg, #d1fae5 1px, transparent 1px),
+    radial-gradient(circle at 25% 25%, #10b981 2px, transparent 2px),
+    radial-gradient(circle at 75% 75%, #059669 2px, transparent 2px);
+  background-size: 40px 40px, 40px 40px, 60px 60px, 60px 60px;
+}
+
+/* Patient list - heartbeat pattern */
+.patient-bg::before, .doctor-bg::before, .login-bg::before { display: none; }
+
+/* Appointment list - calendar pattern */
+.appointment-bg::before {
+  background: 
+    linear-gradient(90deg, #f0fdf4 1px, transparent 1px),
+    linear-gradient(0deg, #dcfce7 1px, transparent 1px),
+    radial-gradient(circle at 50% 50%, #22c55e 1px, transparent 1px);
+  background-size: 30px 30px, 30px 30px, 15px 15px;
+  background-color: #f0fdf4;
+}
+
+/* Add doctor form - stethoscope pattern */
+.add-doctor-bg::before {
+  background: 
+    radial-gradient(circle at 30% 40%, #3b82f6 3px, transparent 3px),
+    radial-gradient(circle at 70% 60%, #1d4ed8 3px, transparent 3px),
+    linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%);
+  background-size: 80px 80px, 80px 80px, 100% 100%;
+}
+
+/* Add patient form - health cross pattern */
+.add-patient-bg::before {
+  background: 
+    linear-gradient(45deg, #fef3c7 0%, #fde68a 25%, #f59e0b 50%, #d97706 75%, #92400e 100%),
+    radial-gradient(circle at 50% 50%, #f59e0b 2px, transparent 2px);
+  background-size: 100% 100%, 40px 40px;
+}
+
+/* Add appointment form - clock pattern */
+.add-appointment-bg::before {
+  background: 
+    radial-gradient(circle at 50% 50%, #8b5cf6 1px, transparent 1px),
+    linear-gradient(0deg, #c4b5fd 1px, transparent 1px),
+    linear-gradient(90deg, #a78bfa 1px, transparent 1px);
+  background-size: 20px 20px, 40px 40px, 40px 40px;
+  background-color: #faf5ff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+  }
+  .navbar a {
+    margin: 0.5rem 0;
+  }
+  .card {
+    margin: 1rem auto;
+    width: 90%;
+  }
+}
+
+/* Layout helpers */
+.page-container {
+  margin-top: 50px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Tables */
+table.table {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+/* Themed cards for role selection and dashboards */
+.card.card-theme-doctor, .stat-card.card-theme-doctor {
+  background: linear-gradient(135deg, #34d399, #059669) !important;
+  border-left: 6px solid #10b981;
+  color: #072a24;
+}
+.card-theme-doctor .btn { background-color:#10b981 !important; border-color:#10b981 !important; }
+.card-theme-doctor .btn:hover { background-color:#047857 !important; border-color:#047857 !important; }
+.card-theme-doctor .role-icon i { color:#10b981 !important; }
+
+.card.card-theme-patient, .stat-card.card-theme-patient {
+  background: linear-gradient(135deg, #fb7185, #ef4444) !important;
+  border-left: 6px solid #ef4444;
+  color: #2a0a0a;
+}
+.card-theme-patient .btn { background-color:#ef4444 !important; border-color:#ef4444 !important; }
+.card-theme-patient .btn:hover { background-color:#b91c1c !important; border-color:#b91c1c !important; }
+.card-theme-patient .role-icon i { color:#ef4444 !important; }
+
+.card.card-theme-admin, .stat-card.card-theme-admin {
+  background: linear-gradient(135deg, #fdba74, #f97316) !important;
+  border-left: 6px solid #f97316;
+  color: #2a1607;
+}
+.card-theme-admin .btn { background-color:#f97316 !important; border-color:#f97316 !important; }
+.card-theme-admin .btn:hover { background-color:#c2410c !important; border-color:#c2410c !important; }
+.card-theme-admin .role-icon i { color:#f97316 !important; }
+
+/* Appointment themed card (distinct cyan palette) */
+.card.card-theme-appointment, .stat-card.card-theme-appointment {
+  background: linear-gradient(135deg, #67e8f9, #06b6d4) !important;
+  border-left: 6px solid #06b6d4;
+  color: #06262a;
+}
+
+/* Reduce white overlay effect on themed cards */
+.card.card-theme-doctor::before,
+.card.card-theme-patient::before,
+.card.card-theme-admin::before,
+.card.card-theme-appointment::before {
+  background: transparent !important;
+}
+.card-theme-appointment .btn { background-color:#06b6d4 !important; border-color:#06b6d4 !important; }
+.card-theme-appointment .btn:hover { background-color:#0e7490 !important; border-color:#0e7490 !important; }
+.card-theme-appointment .role-icon i { color:#06b6d4 !important; }
+
+table.table thead {
+  background-color: var(--primary-light);
+}
+
+table.table thead th {
+  color: var(--primary-dark);
+  font-weight: 600;
+  border-bottom: none;
+}
+
+table.table tbody tr {
+  transition: background 0.2s ease;
+}
+
+table.table tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* Forms */
+label {
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+input.form-control,
+select.form-control,
+textarea.form-control {
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  padding: 0.6rem 0.8rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input.form-control:focus,
+select.form-control:focus,
+textarea.form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+}
+
+/* Dashboard statistic cards */
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.stat-value {
+  color: var(--primary);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  color: #ef4444; /* red accent */
+  font-weight: 600;
+}
+
+/* Reuse existing hover style on info boxes */
+.mydivstyle:hover{
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  transform: translateY(-6px);
+}
+
+.rounded {
+  border-top: 6px solid var(--primary-light);
+  border-radius: 5px;
+}
+
+/* DataTables tweaks to match theme */
+table.dataTable.no-footer {
+  border-bottom: none;
+}
+
+.dt-buttons .dt-button {
+  background-color: var(--primary) !important;
+  border: none !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  padding: 0.5rem 1rem !important;
+  margin-right: 0.5rem !important;
+}
+
+.dt-buttons .dt-button:hover {
+  background-color: var(--primary-dark) !important;
+}
+
+/* ===========================================
+   ANIMATIONS AND TRANSITIONS
+   =========================================== */
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translate3d(0,0,0);
+  }
+  40%, 43% {
+    transform: translate3d(0, -8px, 0);
+  }
+  70% {
+    transform: translate3d(0, -4px, 0);
+  }
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.1);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.1);
+  }
+  70% {
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px rgba(37, 99, 235, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(37, 99, 235, 0.5);
+  }
+}
+
+/* Page Load Animations */
+.page-container {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.card {
+  animation: slideInUp 0.5s ease-out;
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Enhanced Hover Effects */
+.navbar a {
+  position: relative;
+  overflow: hidden;
+}
+
+.navbar a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.navbar a:hover::before {
+  left: 100%;
+}
+
+/* Button Animations */
+button, .btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button::before, .btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+button:hover::before, .btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+button:active, .btn:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* Card Animations */
+.card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(0, 0, 0, 0.06), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 12px;
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+/* Table Row Animations */
+table.table tbody tr {
+  animation: slideInLeft 0.3s ease-out;
+  transition: all 0.2s ease;
+}
+
+table.table tbody tr:nth-child(odd) {
+  animation-delay: 0.1s;
+}
+
+table.table tbody tr:nth-child(even) {
+  animation-delay: 0.2s;
+}
+
+table.table tbody tr:hover {
+  background: linear-gradient(90deg, #f8fafc, #e2e8f0);
+  transform: scale(1.01);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Form Input Animations */
+input.form-control, select.form-control, textarea.form-control {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+input.form-control:focus, select.form-control:focus, textarea.form-control:focus {
+  transform: scale(1.02);
+  animation: glow 2s infinite;
+}
+
+/* Loading States */
+.loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Success/Error Animations */
+.success-message {
+  animation: slideInUp 0.5s ease-out, pulse 0.5s ease-out 0.5s;
+}
+
+.error-message {
+  animation: shake 0.5s ease-out;
+}
+
+/* Stat Cards Animation */
+.stat-card {
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  animation: heartbeat 1.5s ease-in-out;
+}
+
+.stat-value {
+  animation: countUp 2s ease-out;
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dropdown Animations */
+.dropdown-menu {
+  animation: slideInUp 0.3s ease-out;
+  transform-origin: top;
+}
+
+.dropdown-item {
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  transform: translateX(5px);
+}
+
+/* Modal Animations */
+.modal {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal-dialog {
+  animation: slideInUp 0.3s ease-out;
+}
+
+/* Navigation Animations */
+.navbar-brand {
+  transition: all 0.3s ease;
+}
+
+.navbar-brand:hover {
+  animation: bounce 0.6s ease-out;
+}
+
+/* Footer Animations */
+.footer a {
+  transition: all 0.3s ease;
+}
+
+.footer a:hover {
+  transform: translateY(-2px);
+  animation: pulse 0.5s ease-out;
+}
+
+/* Responsive Animation Adjustments */
+@media (max-width: 768px) {
+  .card:hover {
+    transform: translateY(-4px) scale(1.01);
+  }
+  
+  button:hover, .btn:hover {
+    transform: translateY(-1px);
+  }
+  
+  table.table tbody tr:hover {
+    transform: scale(1.005);
+  }
+}
+
+/* Accessibility - Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print Styles - Disable animations for printing */
+@media print {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Role Selection Icons */
+.role-icon {
+  transition: transform 0.3s ease;
+}
+
+.role-icon:hover {
+  transform: scale(1.1);
+}
+
+.role-icon i {
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover .role-icon i {
+  transform: scale(1.1);
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+
+/* Enhanced role selection styling */
+.stat-card {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.stat-card:hover {
+  border-color: rgba(37, 99, 235, 0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}

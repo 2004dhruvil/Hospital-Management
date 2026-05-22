@@ -1,0 +1,51 @@
+{% extends 'navigationbar.html' %}
+{% load static %}
+{% block body %}
+<body class="doctor-bg">
+
+<div class='container page-container'>
+    <h2 class='text-center'>Doctor Dashboard</h2>
+    <p class="text-center">Welcome, <strong>{{ doctor.name }}</strong></p>
+    <br>
+    <div class="row">
+        <div class="col-md-4 card stat-card text-center">
+            <div class="stat-value">{{ upcoming }}</div>
+            <div class="stat-label">Upcoming Appointments</div>
+        </div>
+        <div class="col-md-4 card stat-card text-center">
+            <div class="stat-value">{{ patients_count }}</div>
+            <div class="stat-label">Patients</div>
+        </div>
+        <div class="col-md-4 card stat-card text-center">
+            <a class="btn" href="{% url 'doctor_appointments' %}">View All Appointments</a>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <h4>Next appointments</h4>
+        <table class="table table-hover" id="example">
+            <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in appointments %}
+                <tr>
+                    <td>{{ a.patient.name }}</td>
+                    <td>{{ a.date1 }}</td>
+                    <td>{{ a.time1 }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3">No upcoming appointments.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+
+

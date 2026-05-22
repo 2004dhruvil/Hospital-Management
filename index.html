@@ -1,0 +1,38 @@
+{% extends 'navigationbar.html' %}
+ {% load static%}
+ {%block body %}
+<body class="dashboard-bg">
+<div class='container page-container'>
+<h2 class='text-center' >Admin Dashboard</h2>
+
+<br>
+
+<div class="row">
+   
+    <div class="col-sm-4 text-center mydivstyle card stat-card card-theme-doctor">
+        <div class="stat-value">{{d}}</div>
+        <a href="{% url 'view_doctor'%}"><div class="stat-label">Doctor</div></a>
+        <hr class="rounded">
+</div>
+
+
+ <div class="col-sm-4 text-center mydivstyle card stat-card card-theme-patient">
+        <div class="stat-value">{{p}}</div>
+        <a href="{% url 'view_patient'%}"><div class="stat-label">Patient</div></a>
+        <hr class="rounded">
+
+</div>
+
+
+ <div class="col-sm-4 text-center mydivstyle card stat-card card-theme-appointment">
+        <div class="stat-value">{{a}}</div>
+        <a href="{% url 'view_appointment'%}"><div class="stat-label">Appointment</div></a>
+        <hr class="rounded">
+</div>
+
+
+</div>
+
+
+</div>
+{% endblock %}
